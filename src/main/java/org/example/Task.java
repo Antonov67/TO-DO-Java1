@@ -1,5 +1,7 @@
 package org.example;
 
+import com.google.gson.annotations.JsonAdapter;
+
 import java.util.Date;
 
 public class Task {
@@ -7,6 +9,7 @@ public class Task {
     private String id;
     private String title;
     private boolean completed;
+    @JsonAdapter(DateTypeAdapter.class)
     private Date created;
 
     public String getId() {
