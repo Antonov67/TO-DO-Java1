@@ -9,8 +9,14 @@ public class Task {
     private String id;
     private String title;
     private boolean completed;
+    
     @JsonAdapter(DateTypeAdapter.class)
     private Date created;
+
+    public Task(String title) {
+        this.title = title;
+        this.completed = false;
+    }
 
     public String getId() {
         return id;

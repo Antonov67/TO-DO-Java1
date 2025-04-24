@@ -27,14 +27,28 @@ public class RetrofitService {
                 if (response.isSuccessful()){
                     callback.load(response.body());
                 }
-                else {
-                    System.out.println(response.message());
-                }
             }
 
             @Override
             public void onFailure(Call<ResponseTasks> call, Throwable throwable) {
                 System.out.println(throwable.getMessage());
+            }
+        });
+    }
+
+    public void createTask(Task task, SimpleDataCallback<Task> callback){
+        Call<Task> call = api.createTask(task);
+        call.enqueue(new Callback<Task>() {
+            @Override
+            public void onResponse(Call<Task> call, Response<Task> response) {
+                if (response.isSuccessful()){
+                    callback.load(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Task> call, Throwable throwable) {
+
             }
         });
     }

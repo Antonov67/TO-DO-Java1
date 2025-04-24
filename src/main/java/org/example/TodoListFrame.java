@@ -2,7 +2,6 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Map;
 
 public class TodoListFrame extends JFrame {
     private final TaskTableModel tableModel;
@@ -31,7 +30,7 @@ public class TodoListFrame extends JFrame {
         JPanel buttonPanel = new JPanel();
 
         JButton addButton = new JButton("Add Task");
-        // addButton.addActionListener(this::addTask);
+        addButton.addActionListener(e -> addTask());
 
         JButton completeButton = new JButton("Toggle Complete");
         // completeButton.addActionListener(this::toggleComplete);
@@ -50,6 +49,7 @@ public class TodoListFrame extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
+
     private void loadTasks() {
         service.getTasks(new SimpleDataCallback<ResponseTasks>() {
             @Override
@@ -57,5 +57,20 @@ public class TodoListFrame extends JFrame {
                 tableModel.setTasks(data.getItems());
             }
         });
+    }
+
+    private void addTask() {
+        String title = JOptionPane.showInputDialog(this, "Напишите задачу");
+        if (!title.trim().isEmpty()){
+            Task task = new Task(title);
+            service.createTask(task, new SimpleDataCallback<Task>() {
+                @Override
+                public void load(Task data) {
+                    if (data != null){
+                        loadTasks();
+                    }
+                }
+            });
+        }
     }
 }
